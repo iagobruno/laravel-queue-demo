@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
+use App\Jobs\FirstJob;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::view('/', 'welcome');
+
+Route::post('/dispatch', function (Request $request) {
+    FirstJob::dispatch();
+
+    return [
+        'status' => 'OK',
+        'message' => 'Job added to queue',
+    ];
 });
