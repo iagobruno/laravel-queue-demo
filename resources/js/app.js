@@ -43,6 +43,10 @@ function display(type) {
     };
     debug.innerHTML = messages[type];
     console.log(debug.innerText);
+
+    if (type === 'error' || type === 'success') {
+        button.disabled = false;
+    }
 }
 
 
