@@ -18,10 +18,10 @@ Then start Docker containers using Sail:
 sail up -d
 ```
 
-Start the queue worker to process new jobs.
+Start the queue worker to process the jobs:
 
 ```
-sail artisan queue:work
+sail artisan queue:listen
 ```
 
 ### Front-end assets
@@ -33,7 +33,7 @@ sail yarn install
 sail yarn run dev
 ```
 
-Now you can access the project at http://localhost in the browser.
+Now you can access the project at http://localhost in your browser.
 
 ## How it works
 
