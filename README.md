@@ -34,3 +34,10 @@ sail yarn run dev
 ```
 
 Now you can access the project at http://localhost in the browser.
+
+## How it works
+
+- O cliente faz uma requisição HTTP comum ao servidor.
+- O servidor adiciona um job na fila de processos.
+- Um worker secundário no servidor processa a fila e notifica quando cada job for concluído via web socket.
+- O cliente recebe a resposta do job via web socket.
