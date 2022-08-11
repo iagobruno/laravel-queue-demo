@@ -26,7 +26,7 @@ function dispatch() {
     .then(res => res.json())
     .then((res) => {
         if (res.message !== 'Job added to queue') {
-            display('error');
+            return display('error');
         }
 
         display('waiting');
@@ -37,9 +37,11 @@ function dispatch() {
 function display(type) {
     const messages = {
         'requesting': 'Requesting to server...',
-        'waiting': 'Waiting response...',
-        'error': `<span style="color:red">An error occurred while requesting your order.</span>`,
-        'success': `<span style="color:green">Your request has been processed!</span>`,
+        'waiting': 'Your job was added to the queue. Waiting...',
+        'processing': 'Your job is currently being processed...',
+        'error': `<span style="color:red">An error occurred while requesting your job.</span>`,
+        'failed': `<span style="color:red">An error occurred while processing the job.</span>`,
+        'success': `<span style="color:green">Your requested job has been completed!</span>`,
     };
     debug.innerHTML = messages[type];
     console.log(debug.innerText);
@@ -62,8 +64,22 @@ window.Echo = new EchoCore({
     enabledTransports: ['ws', 'wss'],
 });
 
-Echo.channel('responses.' + clientID).listen('JobCompleted', function (data) {
-    console.log('Web socket event', data);
+const channel = Echo.channel('jobs.' + clientID);
+
+channel.listenToAll((event, data) => {
+    console.log('Web socket event:', event, data);
+});
+
+channel.listen('JobStarted', function (data) {
+    display('processing');
+});
+
+channel.listen('JobCompleted', function (data) {
     display('success');
+    button.disabled = false;
+});
+
+channel.listen('JobFailed', function (data) {
+    display('failed');
     button.disabled = false;
 });

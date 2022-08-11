@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class JobCompleted implements ShouldBroadcastNow
+class JobFailed implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -34,14 +34,4 @@ class JobCompleted implements ShouldBroadcastNow
     {
         return new Channel('jobs.' . $this->clientID);
     }
-
-    /**
-     * The event's broadcast name.
-     *
-     * @return string
-     */
-    // public function broadcastAs()
-    // {
-    //     return 'custom.name';
-    // }
 }

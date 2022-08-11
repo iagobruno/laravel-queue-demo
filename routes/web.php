@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request as Request;
 use App\Jobs\ExpensiveJob;
+use App\Jobs\BadJob;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,7 @@ Route::view('/', 'welcome');
 
 Route::post('/dispatch', function (Request $request) {
     ExpensiveJob::dispatch($request->input('clientID'));
+    // BadJob::dispatch($request->input('clientID'));
 
     return [
         'status' => 'OK',
