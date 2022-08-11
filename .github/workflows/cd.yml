@@ -14,7 +14,13 @@ jobs:
     # needs: tests
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
+      - name: Run production optimizations
+        run: |
+          heroku run php artisan route:cache
+          heroku run php artisan view:cache
+          heroku run php artisan config:cache
 
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
@@ -25,9 +31,3 @@ jobs:
 
           healthcheck: https://${{secrets.HEROKU_APP_NAME}}.herokuapp.com/
           delay: 5 # Time (in seconds) to wait before performing healthcheck.
-
-      - name: Run production optimizations
-        run: |
-          heroku run php artisan route:cache
-          heroku run php artisan view:cache
-          heroku run php artisan config:cache
