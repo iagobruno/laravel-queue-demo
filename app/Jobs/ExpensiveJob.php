@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\JobCompleted;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -9,7 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class FirstJob implements ShouldQueue
+class ExpensiveJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -18,8 +19,9 @@ class FirstJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(
+        public string $clientID
+    ) {
         //
     }
 
@@ -30,6 +32,9 @@ class FirstJob implements ShouldQueue
      */
     public function handle()
     {
-        //
+        // Some expensive operation...
+        sleep(5);
+
+        event(new JobCompleted($this->clientID));
     }
 }

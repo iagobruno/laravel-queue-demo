@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Request;
-use App\Jobs\FirstJob;
+use Illuminate\Http\Request as Request;
+use App\Jobs\ExpensiveJob;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +18,7 @@ use App\Jobs\FirstJob;
 Route::view('/', 'welcome');
 
 Route::post('/dispatch', function (Request $request) {
-    FirstJob::dispatch();
+    ExpensiveJob::dispatch($request->input('clientID'));
 
     return [
         'status' => 'OK',
