@@ -25,3 +25,5 @@ jobs:
 
           healthcheck: https://${{secrets.HEROKU_APP_NAME}}.herokuapp.com/
           delay: 5 # Time (in seconds) to wait before performing healthcheck.
+
+      - run: heroku run cp .env.example .env
