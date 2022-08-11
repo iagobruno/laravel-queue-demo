@@ -16,12 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Run production optimizations
-        run: |
-          heroku run php artisan route:cache
-          heroku run php artisan view:cache
-          heroku run php artisan config:cache
-
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
