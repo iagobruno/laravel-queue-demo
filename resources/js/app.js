@@ -1,6 +1,5 @@
 import EchoCore from 'laravel-echo';
 import Pusher from 'pusher-js';
-import uuid from 'cuid';
 
 window.Pusher = Pusher;
 window.Echo = new EchoCore({
@@ -15,16 +14,17 @@ window.Echo = new EchoCore({
 });
 
 
-const button = document.querySelector('button');
+const buttonGroup = document.querySelector('fieldset');
+const buttons = buttonGroup.querySelectorAll('button');
 const debug = document.querySelector('#debug');
 const csrfToken = document.querySelector('meta[name=csrf-token]').content;
 
-button.addEventListener('click', dispatchJob);
+buttons.forEach((button) => {
+    button.addEventListener('click', dispatchJob);
+});
 
-function dispatchJob() {
-    const ID = uuid();
-
-    button.disabled = true;
+function dispatchJob(evt) {
+    buttonGroup.disabled = true;
     display('requesting');
 
     // Dispatch the job on server
@@ -35,25 +35,25 @@ function dispatchJob() {
             'X-CSRF-TOKEN': csrfToken
         },
         body: JSON.stringify({
-            clientID: ID,
+            dispatchBadJob: evt.currentTarget.classList.contains('secondary'),
         })
     })
-    .then((res) => res.json())
-    .then((res) => {
-        if (res.message === 'Job added to queue') {
-            display('waiting');
-            subscribeToJobEvents();
-        }
-        else {
-            return Promise.reject();
-        }
-    })
-    .catch(() => display('error'));
+        .then((res) => res.json())
+        .then((res) => {
+            if (res.message === 'Job queued') {
+                display('waiting');
+                subscribeToJobEvents(res.jobId);
+            }
+            else {
+                return Promise.reject();
+            }
+        })
+        .catch(() => display('error'));
 
     // Listen to job events
     let channel;
-    function subscribeToJobEvents () {
-        channel = Echo.channel('jobs.' + ID)
+    function subscribeToJobEvents (jobId) {
+        channel = Echo.channel('jobs.' + jobId)
             .listenToAll((event, data) => {
                 console.log('Web socket event:', event, data);
             })
@@ -88,10 +88,10 @@ function display(type) {
     console.log(debug.innerText);
 
     if (type === 'requesting') {
-        button.disabled = true;
+        buttonGroup.disabled = true;
     }
 
     if (type === 'error' || type === 'failed' || type === 'success') {
-        button.disabled = false;
+        buttonGroup.disabled = false;
     }
 }

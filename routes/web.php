@@ -19,11 +19,16 @@ use App\Jobs\BadJob;
 Route::view('/', 'welcome');
 
 Route::post('/dispatch', function (Request $request) {
-    SlowJob::dispatch($request->input('clientID'));
-    // BadJob::dispatch($request->input('clientID'));
+    $id = str()->random();
+
+    if ($request->boolean('dispatchBadJob')) {
+        BadJob::dispatch($id);
+    } else {
+        SlowJob::dispatch($id);
+    }
 
     return [
-        'status' => 'OK',
-        'message' => 'Job added to queue',
+        'message' => 'Job queued',
+        'jobId' => $id,
     ];
 });

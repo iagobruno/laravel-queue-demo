@@ -17,13 +17,16 @@
         <div>
             <h1>Laravel Queue Demo</h1>
             <p>Press the button to add a job to server's queue. <br>You will be notified when the job is complete.</p>
-            <button>DISPATCH</button>
+            <fieldset>
+                <button class="primary">DISPATCH</button>
+                <button class="secondary">Dispatch a bad job</button>
+            </fieldset>
             <div id="debug"></div>
         </div>
     </main>
 
-    <a href="https://github.com/iagobruno/laravel-queue-demo" class="github-corner" aria-label="View source on GitHub"><svg
-            width="80" height="80" viewBox="0 0 250 250"
+    <a href="https://github.com/iagobruno/laravel-queue-demo" class="github-corner"
+        aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250"
             style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
             <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
             <path
