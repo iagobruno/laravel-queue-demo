@@ -8,8 +8,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Events\JobStarted;
-use App\Events\JobFailed;
 
 class BadJob implements ShouldQueue
 {
@@ -20,10 +18,10 @@ class BadJob implements ShouldQueue
      */
     public int $tries = 1;
 
-     /**
+    /**
      * The maximum number of unhandled exceptions to allow before failing.
      */
-    public $maxExceptions = 3;
+    public int $maxExceptions = 3;
 
     /**
      * The number of seconds to wait before retrying the job.
@@ -37,7 +35,7 @@ class BadJob implements ShouldQueue
      * @return void
      */
     public function __construct(
-        private string $clientID
+        public string $clientID
     ) {
         //
     }
@@ -49,23 +47,8 @@ class BadJob implements ShouldQueue
      */
     public function handle()
     {
-        event(new JobStarted($this->clientID));
-
-        return $this->release(2); // Release the job back onto the queue for immediate processing
+        // return $this->release(2); // Release the job back onto the queue for immediate processing
         // return $this->fail(); // Manually mark a job as failed
-        // throw new \Exception("Unknow Error!");
-
-        event(new JobCompleted($this->clientID));
-    }
-
-    /**
-     * Handle a job failure.
-     *
-     * @param  \Throwable  $exception
-     * @return void
-     */
-    public function failed($exception)
-    {
-        event(new JobFailed($this->clientID));
+        throw new \Exception("Unknow Error!");
     }
 }

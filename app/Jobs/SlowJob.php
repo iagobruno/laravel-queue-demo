@@ -8,12 +8,15 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Events\JobStarted;
-use App\Events\JobCompleted;
 
 class SlowJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    /**
+     * The number of seconds the job can run before timing out.
+     */
+    public int $timeout = 60;
 
     /**
      * Create a new job instance.
@@ -21,7 +24,7 @@ class SlowJob implements ShouldQueue
      * @return void
      */
     public function __construct(
-        private string $clientID
+        public string $clientID
     ) {
         //
     }
@@ -33,11 +36,9 @@ class SlowJob implements ShouldQueue
      */
     public function handle()
     {
-        event(new JobStarted($this->clientID));
-
         // Some expensive operation...
         sleep(3);
 
-        event(new JobCompleted($this->clientID));
+        info('Successfully completed!');
     }
 }
