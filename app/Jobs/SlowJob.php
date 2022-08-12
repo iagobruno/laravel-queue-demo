@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Events\JobStarted;
 use App\Events\JobCompleted;
 
-class ExpensiveJob implements ShouldQueue
+class SlowJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
