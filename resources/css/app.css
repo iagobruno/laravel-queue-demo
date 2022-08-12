@@ -1,7 +1,10 @@
-body {
+html {
     font-family: 'Nunito', sans-serif;
     font-size: 24px;
     color: #111;
+}
+
+body {
     margin: 0;
 }
 
@@ -14,20 +17,20 @@ main {
     align-items: center;
 }
 
-main>div {
+main > div {
     padding: 20px;
 }
 
 h1 {
-    font-size: 2em;
+    font-size: 2rem;
     margin: 0;
 }
 
 p {
-    font-size: 0.92em;
-    line-height: 1.35em;
+    font-size: 0.92rem;
+    line-height: 1.35rem;
     color: rgb(0 0 0 / 70%);
-    margin: 0.6em 0 1.2em;
+    margin: 0.6rem 0 1.2rem;
 }
 
 fieldset {
@@ -49,7 +52,7 @@ button {
     padding: 10px;
     width: 100%;
     text-align: center;
-    font-size: 0.9em;
+    font-size: 0.9rem;
     letter-spacing: 1px;
     color: inherit;
     cursor: pointer;
@@ -84,7 +87,11 @@ button.primary {
 }
 
 #debug {
-    margin-top: 1em;
-    min-height: 1.2em;
-    font-size: 0.94em;
+    margin: 0.9rem 0 1rem;
+    min-height: 1.2rem;
+    font-size: 0.94rem;
+}
+
+.horizon-link {
+    font-size: 0.6em;
 }

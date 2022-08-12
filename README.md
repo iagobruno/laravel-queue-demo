@@ -18,11 +18,15 @@ Then start Docker containers using Sail:
 sail up -d
 ```
 
-Start the queue worker to process the jobs:
+Start the queue workers to process the jobs:
 
 ```
 sail artisan queue:listen
+// or use horizon
+sail artisan horizon
 ```
+
+_See [Horizon documentation](https://laravel.com/docs/9.x/horizon)._
 
 ### Front-end assets
 

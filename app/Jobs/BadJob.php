@@ -16,7 +16,7 @@ class BadJob implements ShouldQueue
     /**
      * The number of times the job may be attempted.
      */
-    public int $tries = 1;
+    public int $tries = 3;
 
     /**
      * The maximum number of unhandled exceptions to allow before failing.
@@ -27,7 +27,7 @@ class BadJob implements ShouldQueue
      * The number of seconds to wait before retrying the job.
      * @see https://laravel.com/docs/9.x/queues#dealing-with-failed-jobs
      */
-    public int $backoff = 1;
+    public $backoff = [1, 3, 5];
 
     /**
      * Create a new job instance.
@@ -47,6 +47,8 @@ class BadJob implements ShouldQueue
      */
     public function handle()
     {
+        sleep(1);
+
         // return $this->release(2); // Release the job back onto the queue for immediate processing
         // return $this->fail(); // Manually mark a job as failed
         throw new \Exception("Unknow Error!");

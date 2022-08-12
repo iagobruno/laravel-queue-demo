@@ -54,17 +54,15 @@ function dispatchJob(evt) {
     let channel;
     function subscribeToJobEvents (jobId) {
         channel = Echo.channel('jobs.' + jobId)
-            .listenToAll((event, data) => {
-                console.log('Web socket event:', event, data);
-            })
-            .listen('JobStarted', function (data) {
+            .listenToAll(console.log.bind(null, 'Web socket event =>'))
+            .listen('JobStarted', (data) => {
                 display('processing');
             })
-            .listen('JobCompleted', function (data) {
+            .listen('JobCompleted', (data) => {
                 display('success');
                 unsubscribe();
             })
-            .listen('JobFailed', function (data) {
+            .listen('JobFailed', (data) => {
                 display('failed');
                 unsubscribe();
             });

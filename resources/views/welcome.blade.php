@@ -8,7 +8,10 @@
 
     <title>Laravel Queue Demo</title>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite([
+        'resources/css/app.css',
+        'resources/js/app.js'
+    ])
 
 </head>
 
@@ -22,6 +25,7 @@
                 <button class="secondary">Dispatch a bad job</button>
             </fieldset>
             <div id="debug"></div>
+            <center class="horizon-link"><a href="{{ url(config('horizon.path')) }}">View Horizon dashboard</a></center>
         </div>
     </main>
 
