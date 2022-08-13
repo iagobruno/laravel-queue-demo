@@ -39,6 +39,6 @@ class SlowJob implements ShouldQueue
         // Some expensive operation...
         sleep(3);
 
-        info('Successfully completed!');
+        info('Job successfully completed!');
     }
 }
