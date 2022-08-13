@@ -31,14 +31,15 @@ class AboutGithubUser extends Command
         $username = $this->argument('username') ?? $this->ask('Github username:');
         $response = Http::acceptJson()->get("https://api.github.com/users/{$username}");
 
-        if ($response->status() === 404) {
-            return $this->error('User not found');
-        }
-        else if (!$response->ok()) {
-            $this->error('Something goes wrong');
+        if ($response->failed()) {
+            $message = match ($response->status()) {
+                404 => 'User not found',
+                default => 'Something goes wrong',
+            };
+            $this->error($message);
         }
 
         dump($response->json());
-        return 0;
+        return $response->successful() ? 0 : 1;
     }
 }

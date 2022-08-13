@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\AboutGithubUser;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,6 +17,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        // $schedule->command(AboutGithubUser::class, ['iagobruno'])->everyMinute();
+        // $schedule->command('model:prune')->dailyAt('00:00')->withoutOverlapping();
+        // $schedule->job(new \App\Jobs\SlowJob)->daily()->onOneServer();
+        // $schedule->call(fn () => DB::table('recent_users')->delete())->daily();
     }
 
     /**
