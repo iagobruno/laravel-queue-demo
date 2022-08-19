@@ -31,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
             $payload = $event->job->payload();
             $jobClass = unserialize($payload['data']['command']);
             $jobClassName = get_class($jobClass);
+            if (!str_starts_with($jobClassName, 'App\\Jobs\\')) return;
 
             $isFirstAttempt = $event->job->attempts() === 1;
             if ($isFirstAttempt) {
@@ -43,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
             $payload = $event->job->payload();
             $jobClass = unserialize($payload['data']['command']);
             $jobClassName = get_class($jobClass);
+            if (!str_starts_with($jobClassName, 'App\\Jobs\\')) return;
 
             $isCompleted = !$event->job->isReleased() && !$event->job->hasFailed();
             if ($isCompleted) {
@@ -55,6 +57,7 @@ class AppServiceProvider extends ServiceProvider
             $payload = $event->job->payload();
             $jobClass = unserialize($payload['data']['command']);
             $jobClassName = get_class($jobClass);
+            if (!str_starts_with($jobClassName, 'App\\Jobs\\')) return;
 
             if ($event->job->hasFailed()) {
                 $id = $jobClass->clientID;
