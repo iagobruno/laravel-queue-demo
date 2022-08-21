@@ -22,7 +22,7 @@ Route::view('/', 'welcome');
 Route::post('/dispatch', function (Request $request) {
     $id = str()->random();
 
-    if ($request->boolean('dispatchBadJob')) {
+    if ($request->boolean('dispatchBadJob', false)) {
         BadJob::dispatch($id);
     } else {
         SlowJob::dispatch($id);
